@@ -30,12 +30,11 @@ const Sanction = ({ formData = {} }) => {
     title1: {
       fontSize: 16,
       fontFamily: "Times-Bold",
-      marginBottom: 5,
     },
     title2: {
-      fontSize: 14,
+      fontSize: 13,
       fontFamily: "Times-Bold",
-      marginBottom: 15,
+      marginTop: 3,
     },
     formSection: {
       marginBottom: 15,
@@ -43,28 +42,25 @@ const Sanction = ({ formData = {} }) => {
     fieldRow: {
       flexDirection: "row",
       marginBottom: 8,
-      alignItems: "flex-start",
     },
     fieldLabel: {
       fontFamily: "Times-Bold",
-      minWidth: 120,
-      marginRight: 10,
+      minWidth: 150,
     },
     fieldValue: {
       flex: 1,
       borderBottom: "1pt solid black",
-      paddingBottom: 2,
-      minHeight: 15,
+      minHeight: 10,
     },
     multiFieldRow: {
       flexDirection: "row",
-      marginBottom: 8,
       justifyContent: "space-between",
+      marginBottom: 8,
     },
     multiField: {
       flexDirection: "row",
-      alignItems: "flex-start",
       flex: 1,
+      marginRight: 10,
     },
     multiFieldLabel: {
       fontFamily: "Times-Bold",
@@ -73,113 +69,92 @@ const Sanction = ({ formData = {} }) => {
     multiFieldValue: {
       flex: 1,
       borderBottom: "1pt solid black",
-      paddingBottom: 2,
-      minHeight: 15,
-      marginRight: 15,
+      minHeight: 10,
     },
     yesNoRow: {
       flexDirection: "row",
       marginBottom: 8,
-      alignItems: "center",
     },
     yesNoText: {
       flex: 1,
-      fontFamily: "Times-Roman",
     },
     yesNoAnswer: {
       fontFamily: "Times-Bold",
-      marginLeft: 10,
     },
     permissionText: {
       marginBottom: 15,
-      fontFamily: "Times-Roman",
     },
     expenditureHeader: {
       fontSize: 13,
       fontFamily: "Times-Bold",
-      marginBottom: 10,
+      marginBottom: 6,
       textAlign: "center",
     },
     table: {
+      border: "1pt solid black",
       marginBottom: 15,
     },
     tableHeader: {
       flexDirection: "row",
-      borderTop: "1pt solid black",
       borderBottom: "1pt solid black",
       backgroundColor: "#f0f0f0",
     },
     tableRow: {
       flexDirection: "row",
       borderBottom: "1pt solid black",
-      minHeight: 25,
+      minHeight: 10,
+    },
+    lastRow: {
+      borderBottom: "none",
     },
     tableCell: {
-      padding: 4,
+      padding: 2,
       borderRight: "1pt solid black",
       fontSize: 10,
-      textAlign: "center",
       justifyContent: "center",
-    },
-    tableCellSNo: {
-      width: "8%",
-    },
-    tableCellDesc: {
-      width: "35%",
-      textAlign: "left",
-    },
-    tableCellCost: {
-      width: "20%",
-    },
-    tableCellJust: {
-      width: "37%",
-      textAlign: "left",
     },
     tableCellHeader: {
       fontFamily: "Times-Bold",
       fontSize: 11,
     },
+    colSNo: { width: "8%", textAlign: "center" },
+    colDesc: { width: "35%" },
+    colCost: { width: "20%", textAlign: "center" },
+    colJust: { width: "37%", borderRight: "none" },
     financialSection: {
-      marginBottom: 15,
+      marginBottom: 0,
     },
     financialText: {
-      marginBottom: 8,
+      marginBottom: 0,
     },
     signatureSection: {
-      marginTop: 20,
+      marginTop: 0,
     },
     signatureRow: {
       flexDirection: "row",
       justifyContent: "space-between",
-      marginBottom: 25,
+      marginTop: 40,
     },
     signature: {
-      textAlign: "center",
       width: "45%",
+      textAlign: "center",
     },
     signatureLabel: {
-      fontFamily: "Times-Roman",
       fontSize: 10,
     },
     approvalSection: {
-      marginTop: 25,
+      marginTop: 40,
       fontSize: 11,
-    },
-    approvalItem: {
-      marginBottom: 15,
     },
     approvalHeader: {
       fontFamily: "Times-Bold",
       textAlign: "center",
       marginBottom: 10,
     },
-    lastRow: {
-      borderBottom: "none",
+    approvalItem: {
+      marginBottom: 15,
     },
   });
-
-  // Prepare expenditure items with empty rows to make total of 8
-  const expenditureRows = [...formData.expenditureItems || []];
 
   return (
     <Document>
@@ -194,136 +169,139 @@ const Sanction = ({ formData = {} }) => {
           <Text style={styles.title2}>CLUBS/SOCIETIES/SPORTS DEPARTMENT</Text>
         </View>
 
-        {/* Event Details Section */}
+        {/* Event Details */}
         <View style={styles.formSection}>
-          <View style={styles.fieldRow}>
-            <Text style={styles.fieldLabel}>Name of Club/Technical Society:</Text>
-            <Text style={styles.fieldValue}>{formData.clubName || ""}</Text>
+          {/* Event Details Table */}
+          <View style={styles.table}>
+            {/* Club/Society */}
+            <View style={styles.tableRow}>
+              <Text style={[styles.tableCell, { width: "30%", fontFamily: "Times-Bold" }]}>
+                Name of Club/Technical Society
+              </Text>
+              <Text style={[styles.tableCell, { width: "70%" }]}>
+                {formData.clubName || ""}
+              </Text>
+            </View>
+
+            {/* Event Name */}
+            <View style={styles.tableRow}>
+              <Text style={[styles.tableCell, { width: "30%", fontFamily: "Times-Bold" }]}>
+                Event Name
+              </Text>
+              <Text style={[styles.tableCell, { width: "70%" }]}>
+                {formData.eventName || ""}
+              </Text>
+            </View>
+
+            {/* Date, Venue, Time in one row */}
+            <View style={styles.tableRow}>
+              <Text style={[styles.tableCell, { width: "30%", fontFamily: "Times-Bold" }]}>
+                Date:{" "}
+                <Text style={{ fontFamily: "Times-Roman" }}>
+                  {formatDate(formData.eventDate)}
+                </Text>
+              </Text>
+              <Text style={[styles.tableCell, { width: "33%", fontFamily: "Times-Bold" }]}>
+                Venue(s):{" "}
+                <Text style={{ fontFamily: "Times-Roman" }}>
+                  {formData.venue || ""}
+                </Text>
+              </Text>
+              <Text style={[styles.tableCell, { width: "34%", borderRight: "none", fontFamily: "Times-Bold" }]}>
+                Time:{" "}
+                <Text style={{ fontFamily: "Times-Roman" }}>
+                  {formatTime(formData.time)}
+                </Text>
+              </Text>
+            </View>
+
+
+            {/* Event Description */}
+            <View style={styles.tableRow}>
+              <Text style={[styles.tableCell, { width: "30%", fontFamily: "Times-Bold" }]}>
+                Brief Event Description
+              </Text>
+              <Text style={[styles.tableCell, { width: "70%" }]}>
+                {formData.eventDescription || ""}
+              </Text>
+            </View>
           </View>
 
-          <View style={styles.fieldRow}>
-            <Text style={styles.fieldLabel}>Event Name:</Text>
-            <Text style={styles.fieldValue}>{formData.eventName || ""}</Text>
-          </View>
-
-          <View style={styles.multiFieldRow}>
-            <View style={styles.multiField}>
-              <Text style={styles.multiFieldLabel}>Date:</Text>
-              <Text style={styles.multiFieldValue}>{formatDate(formData.eventDate)}</Text>
-            </View>
-            <View style={styles.multiField}>
-              <Text style={styles.multiFieldLabel}>Venue(s):</Text>
-              <Text style={styles.multiFieldValue}>{formData.venue || ""}</Text>
-            </View>
-            <View style={styles.multiField}>
-              <Text style={styles.multiFieldLabel}>Time:</Text>
-              <Text style={[styles.multiFieldValue, { marginRight: 0 }]}>{formatTime(formData.time)}</Text>
-            </View>
-          </View>
-
-          <View style={styles.fieldRow}>
-            <Text style={styles.fieldLabel}>Brief Event Description:</Text>
-            <Text style={styles.fieldValue}>{formData.eventDescription || ""}</Text>
-          </View>
 
           <View style={styles.yesNoRow}>
             <Text style={styles.yesNoText}>
-              Have the details of the event signed by Club Secretary attached alongwith the sanction?
+              Have the details of the event signed by Club Secretary attached along with the sanction?
             </Text>
-            <Text style={styles.yesNoAnswer}>{formData.detailsSigned || "NO"}</Text>
+            <Text style={styles.yesNoAnswer}>{"YES / NO"}</Text>
+          </View>
+          <View style={styles.permissionText}>
+            <Text>Permission may please be granted for conducting above mentioned event.</Text>
           </View>
         </View>
 
-        <View style={styles.permissionText}>
-          <Text>Permission may please be granted for conducting above mentioned event.</Text>
-        </View>
-
-        {/* Expenditure Details */}
+        {/* Expenditure Table */}
         <View style={styles.expenditureHeader}>
           <Text>EXPENDITURE DETAILS (Enter NIL if no funding required)</Text>
         </View>
 
         <View style={styles.table}>
-          {/* Table Header */}
+          {/* Header */}
           <View style={styles.tableHeader}>
-            <View style={[styles.tableCell, styles.tableCellSNo, styles.tableCellHeader]}>
-              <Text>S. No.</Text>
-            </View>
-            <View style={[styles.tableCell, styles.tableCellDesc, styles.tableCellHeader]}>
-              <Text>Description</Text>
-            </View>
-            <View style={[styles.tableCell, styles.tableCellCost, styles.tableCellHeader]}>
-              <Text>Approx. Cost</Text>
-            </View>
-            <View style={[styles.tableCell, styles.tableCellJust, styles.tableCellHeader, { borderRight: "none" }]}>
-              <Text>Justification</Text>
-            </View>
+            <Text style={[styles.tableCell, styles.colSNo, styles.tableCellHeader]}>S. No.</Text>
+            <Text style={[styles.tableCell, styles.colDesc, styles.tableCellHeader]}>Description</Text>
+            <Text style={[styles.tableCell, styles.colCost, styles.tableCellHeader]}>Approx. Cost</Text>
+            <Text style={[styles.tableCell, styles.colJust, styles.tableCellHeader]}>Justification</Text>
           </View>
 
-          {/* Table Rows */}
-          {expenditureRows.map((item, index) => (
-            <View key={index} style={[styles.tableRow]}>
-              <View style={[styles.tableCell, styles.tableCellSNo]}>
-                <Text>{index + 1}</Text>
-              </View>
-              <View style={[styles.tableCell, styles.tableCellDesc]}>
-                <Text>{item.description || ""}</Text>
-              </View>
-              <View style={[styles.tableCell, styles.tableCellCost]}>
-                <Text>{item.cost ? `₹${item.cost}` : ""}</Text>
-              </View>
-              <View style={[styles.tableCell, styles.tableCellJust, { borderRight: "none" }]}>
-                <Text>{item.justification || ""}</Text>
-              </View>
+          {/* Rows */}
+          {formData.expenditureItems?.map((item, index) => (
+            <View key={index} style={styles.tableRow}>
+              <Text style={[styles.tableCell, styles.colSNo]}>{index + 1}</Text>
+              <Text style={[styles.tableCell, styles.colDesc]}>{item.description || ""}</Text>
+              <Text style={[styles.tableCell, styles.colCost]}>
+                {item.cost ? `Rs. ${item.cost}` : ""}
+              </Text>
+              <Text style={[styles.tableCell, styles.colJust]}>{item.justification || ""}</Text>
             </View>
           ))}
 
-
-          {/* Total Row */}
-          <View style={styles.tableRow}>
-            <View style={[styles.tableCell, styles.tableCellSNo]}></View>
-            <View style={[styles.tableCell, styles.tableCellDesc, styles.tableCellHeader]}>
-              <Text>TOTAL</Text>
-            </View>
-            <View style={[styles.tableCell, styles.tableCellCost, styles.tableCellHeader]}>
-              <Text>{formData.totalAmount > 0 ? `₹${formData.totalAmount.toFixed(2)}` : ""}</Text>
-            </View>
-            <View style={[styles.tableCell, styles.tableCellJust, { borderRight: "none" }]}></View>
+          {/* Total */}
+          <View style={[styles.tableRow, styles.lastRow]}>
+            <Text style={[styles.tableCell, styles.colSNo]} />
+            <Text style={[styles.tableCell, styles.colDesc, styles.tableCellHeader]}>TOTAL</Text>
+            <Text style={[styles.tableCell, styles.colCost, styles.tableCellHeader]}>
+              {formData.totalAmount > 0 ? `Rs. ${formData.totalAmount.toFixed(2)}` : ""}
+            </Text>
+            <Text style={[styles.tableCell, styles.colJust]} />
           </View>
         </View>
 
-        {/* Financial Sanction Text */}
+        {/* Financial sanction */}
         <View style={styles.financialSection}>
-          <View style={styles.financialText}>
-            <Text>
-              Financial Sanction may kindly be accorded for Rs.{" "}
-              <Text style={{ borderBottom: "1pt solid black", paddingBottom: 2 }}>
-                {formData.totalAmount > 0 ? formData.totalAmount.toFixed(2) : "________"}
-              </Text>
-              {" "}as per the above details.
+          <Text style={styles.financialText}>
+            Financial Sanction may kindly be accorded for Rs.{" "}
+            <Text style={{ borderBottom: "1pt solid black" }}>
+              {formData.totalAmount > 0 ? formData.totalAmount.toFixed(2) : "________"}
+            </Text>{" "}
+            as per the above details.
+          </Text>
+          <Text style={styles.financialText}>
+            The expenditure will be met out from the{" "}
+            <Text style={{ borderBottom: "1pt solid black" }}>
+              {formData.fundSource || "________________"}
+            </Text>{" "}
+            Fund.
+          </Text>
+          <Text style={styles.financialText}>
+            An advance of Rs.{" "}
+            <Text style={{ borderBottom: "1pt solid black" }}>
+              {formData.advanceAmount || "________"}
+            </Text>{" "}
+            against this sanction may be given in the name of{" "}
+            <Text style={{ borderBottom: "1pt solid black" }}>
+              {formData.recipientName || "________________"}
             </Text>
-          </View>
-          <View style={styles.financialText}>
-            <Text>
-              The expenditure will be met out from the{" "}
-              <Text style={{ borderBottom: "1pt solid black", paddingBottom: 2 }}>
-                {formData.fundSource || "________________"}
-              </Text>
-              {" "}Fund.
-            </Text>
-          </View>
-          <View style={styles.financialText}>
-            <Text>
-              An advance of Rs.{" "}
-              <Text style={{ borderBottom: "1pt solid black", paddingBottom: 2 }}>
-                {formData.advanceAmount || "________"}
-              </Text>
-              {" "}against this sanction may be given in the name of{" "}
-              <Text style={{ borderBottom: "1pt solid black", paddingBottom: 2 }}>
-                {formData.recipientName || "________________"}
-              </Text>
-            </Text>
-          </View>
+          </Text>
         </View>
 
         {/* Signatures */}
@@ -338,28 +316,50 @@ const Sanction = ({ formData = {} }) => {
           </View>
         </View>
 
-        {/* Approval Section */}
-        <View style={styles.approvalSection}>
-          <Text style={styles.approvalHeader}>EVENT DETAILS & EXPENDITURE HAS BEEN VERIFIED</Text>
-
-          <View style={styles.approvalItem}>
-            <Text>1. O/I Club/Technical Societies</Text>
-            <Text>   Recommended/Not Recommended</Text>
+        {/* Approval Section as Table */}
+        <View style={styles.table}>
+          {/* Header */}
+          <View style={styles.tableHeader}>
+            <Text style={[styles.tableCell, { width: "100%", textAlign: "center" }, styles.tableCellHeader]}>
+              EVENT DETAILS & EXPENDITURE HAS BEEN VERIFIED
+            </Text>
           </View>
 
-          <View style={styles.approvalItem}>
-            <Text>2. ADSA(C)</Text>
-            <Text>   Entered in Clubs/Societies Register at Page No. ________</Text>
-            <Text>   Verified by Clerk, DSA Office</Text>
-          </View>
+          {/* Main Row (Left 1 cell spanning, Right 2 stacked cells) */}
+          <View style={styles.tableRow}>
+            {/* Left cell (spans vertically) */}
+            <Text style={[styles.tableCell, { width: "40%", fontFamily: "Times-Bold" }]}>
+              1. O/I Club/Technical Societies
+            </Text>
 
-          <View style={styles.approvalItem}>
-            <Text>   Sanction/Not Sanctioned</Text>
-            <Text style={{ textAlign: "right", marginTop: 10 }}>Dean Students Affairs</Text>
+            {/* Right side with two stacked rows */}
+            <View style={{ width: "60%", flexDirection: "column" }}>
+              <Text style={[styles.tableCell, { borderRight: "none", fontFamily: "Times-Bold" }]}>
+                Recommended / Not Recommended
+              </Text>
+              <Text style={[styles.tableCell, { borderRight: "none", fontFamily: "Times-Bold" }]}>
+                2. ADSA(TS/C){"\n"}
+              </Text>
+            </View>
           </View>
         </View>
-      </Page>
-    </Document>
+
+        {/* Sanction / Not Sanctioned with signature */}
+        <View style={{ marginTop: 5 }}>
+          <Text style={{ fontFamily: "Times-Bold" }} >
+            Entered in Clubs / Societies Register at Page No. ________{"\n"}
+          </Text>
+          <Text style={{ fontFamily: "Times-Bold", marginTop: 5 }} >
+            Verified by Clerk, DSA Office
+          </Text>
+          <Text style={{ fontFamily: "Times-Bold", marginTop: 5 }}>Sanction / Not Sanctioned</Text>
+          <Text style={{ marginTop: 10, fontFamily: "Times-Bold" }}>
+            Dean Students Affairs
+          </Text>
+        </View>
+
+      </Page >
+    </Document >
   );
 };
 
