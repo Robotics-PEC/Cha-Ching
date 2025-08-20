@@ -180,9 +180,6 @@ const Sanction = ({ formData = {} }) => {
 
   // Prepare expenditure items with empty rows to make total of 8
   const expenditureRows = [...formData.expenditureItems || []];
-  while (expenditureRows.length < 8) {
-    expenditureRows.push({ description: "", cost: "", justification: "" });
-  }
 
   return (
     <Document>
@@ -265,7 +262,7 @@ const Sanction = ({ formData = {} }) => {
 
           {/* Table Rows */}
           {expenditureRows.map((item, index) => (
-            <View key={index} style={[styles.tableRow, index === 7 ? styles.lastRow : {}]}>
+            <View key={index} style={[styles.tableRow]}>
               <View style={[styles.tableCell, styles.tableCellSNo]}>
                 <Text>{index + 1}</Text>
               </View>
@@ -280,6 +277,7 @@ const Sanction = ({ formData = {} }) => {
               </View>
             </View>
           ))}
+
 
           {/* Total Row */}
           <View style={styles.tableRow}>
