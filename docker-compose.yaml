@@ -1,0 +1,33 @@
+services:
+  yarn:
+    image: node:22
+    working_dir: /app
+    volumes:
+      - .:/app
+    entrypoint: yarn
+
+  dev:
+    image: node:22
+    working_dir: /app
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000" # Host:Container port mapping for external access
+    command: yarn dev --host
+    tty: true
+
+  build:
+    image: node:22
+    working_dir: /app
+    volumes:
+      - .:/app
+    command: yarn build
+
+  preview:
+    image: node:22
+    working_dir: /app
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000" # Host:Container port mapping for external access
+    command: yarn preview --host
