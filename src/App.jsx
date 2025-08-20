@@ -69,6 +69,15 @@ const App = () => {
             <p className="text-xl text-muted-foreground">
               Create Sanction with ease
             </p>
+              <p className="mt-4 text-sm text-gray-600">
+              For changes contact:{" "}
+              <a
+                href="tel:+919424889220"
+                className="text-blue-600 hover:underline font-medium"
+              >
+                Kartavya Bang (+91 94248 89220)
+              </a>
+            </p>
           </div>
 
           <div className="bg-white rounded-2xl shadow-lg border border-gray-200">
