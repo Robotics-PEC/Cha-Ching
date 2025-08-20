@@ -12,6 +12,9 @@ export default defineConfig({
   preview: {
     port: 8000,
   },
+  // optimizeDeps: {
+  //   exclude: ["pdfjs-dist"],
+  // },
   resolve: {
     alias: {
       '@': path.resolve(__dirname, 'src'),
@@ -20,8 +23,6 @@ export default defineConfig({
   build: {
     rollupOptions: {
       output: {
-        entryFileNames: "index.js",
-        assetFileNames: "index.css",
         dir: "./dist",
       },
     },
