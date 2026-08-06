@@ -210,20 +210,20 @@ const Sanction = ({ formData = {} }) => {
             <View style={styles.tableRow}>
               <Text style={[styles.tableCell, { width: "30%", fontFamily: "Times-Bold" }]}>
                 Date:{" "}
-                <Text style={{ fontFamily: "Times-Roman" }}>
-                  {formatDate(formData.eventDate)}
+                <Text style={{ fontFamily: "Times-Roman"}}>
+                  {`${formatDate(formData.fromEventDate)} - ${formatDate(formData.toEventDate)}`}
                 </Text>
               </Text>
               <Text style={[styles.tableCell, { width: "33%", fontFamily: "Times-Bold" }]}>
                 Venue(s):{" "}
                 <Text style={{ fontFamily: "Times-Roman" }}>
-                  {formData.venue || ""}
+                  {formData.venues || ""}
                 </Text>
               </Text>
               <Text style={[styles.tableCell, { width: "34%", borderRight: "none", fontFamily: "Times-Bold" }]}>
                 Time:{" "}
                 <Text style={{ fontFamily: "Times-Roman" }}>
-                  {formatTime(formData.time)}
+                  {`${formatTime(formData.fromTime)} - ${formatTime(formData.toTime)}`}
                 </Text>
               </Text>
             </View>
@@ -344,29 +344,36 @@ const Sanction = ({ formData = {} }) => {
           {/* Main Row (Left 1 cell spanning, Right 2 stacked cells) */}
           <View style={styles.tableRow}>
             {/* Left cell (spans vertically) */}
-            <Text style={[styles.tableCell, { width: "40%", fontFamily: "Times-Bold" }]}>
-              1. O/I Club/Technical Societies
-            </Text>
+            <View style={[styles.tableCell, { width: "40%", fontFamily: "Times-Bold"}]}>
+              <Text>
+                1.
+              </Text>
+              <Text style={{paddingTop: 35 }}>
+                P/I or Convener of Club/Technical Societies, PECFEST Committee
+              </Text>
+            </View>
 
             {/* Right side with two stacked rows */}
             <View style={{ width: "60%", flexDirection: "column" }}>
-              <Text style={[styles.tableCell, { borderRight: "none", fontFamily: "Times-Bold" }]}>
+              <Text style={[styles.tableCell, { borderRight: "none", fontFamily: "Times-Bold", borderBottom: 1 }]}>
                 Recommended / Not Recommended
               </Text>
-              <Text style={[styles.tableCell, { borderRight: "none", fontFamily: "Times-Bold" }]}>
-                2. ADSA(TS/C){"\n"}
+              <View style={[styles.tableCell, { borderRight: "none", fontFamily: "Times-Bold"}]}>
+              <Text>
+                2.
               </Text>
+              <Text style={{paddingTop: 30}}>
+                ADSA(C)/ ADSA (T.S.)/ADSA (H)/ Coordinator, NSS, NCC
+              </Text>
+              </View>
             </View>
           </View>
         </View>
 
         {/* Sanction / Not Sanctioned with signature */}
         <View style={{ marginTop: 5 }}>
-          <Text style={{ fontFamily: "Times-Bold" }} >
-            Entered in Clubs / Societies Register at Page No. ________{"\n"}
-          </Text>
           <Text style={{ fontFamily: "Times-Bold", marginTop: 5 }} >
-            Verified by Clerk, DSA Office
+            Verified by Dealing Assistant, DSA Office
           </Text>
           <Text style={{ fontFamily: "Times-Bold", marginTop: 5 }}>Sanction / Not Sanctioned</Text>
           <Text style={{ marginTop: 50, fontFamily: "Times-Bold" }}>

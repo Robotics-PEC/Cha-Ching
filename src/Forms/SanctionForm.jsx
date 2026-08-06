@@ -13,9 +13,11 @@ export const SanctionForm = ({ onFormDataChange }) => {
     const [formData, setFormData] = useState({
         clubName: "",
         eventName: "",
-        eventDate: "",
-        venue: "",
-        time: "",
+        fromEventDate: "",
+        toEventDate: "",
+        venues: [],
+        fromTime: "",
+        toTime: "",
         eventDescription: "",
         detailsSigned: "NO",
         expenditureItems: [],
@@ -115,19 +117,29 @@ export const SanctionForm = ({ onFormDataChange }) => {
             placeholder: "Enter event name...",
         },
         {
-            label: "Date",
-            name: "eventDate",
+            label: "From Date",
+            name: "fromEventDate",
+            type: "date",
+        },
+        {
+            label: "To Date",
+            name: "toEventDate",
             type: "date",
         },
         {
             label: "Venue(s)",
-            name: "venue",
+            name: "venues",
             type: "text",
             placeholder: "Enter venue...",
         },
         {
-            label: "Time",
-            name: "time",
+            label: "From Time",
+            name: "fromTime",
+            type: "time",
+        },
+        {
+            label: "To Time",
+            name: "toTime",
             type: "time",
         }
     ];
@@ -147,7 +159,7 @@ export const SanctionForm = ({ onFormDataChange }) => {
                         initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: index * 0.05 }}
-                        className="space-y-1"
+                        className="space-y-1 grid grid-cols-2"
                     >
                         <Label htmlFor={field.name} className="text-xs font-medium text-gray-700 block">
                             {field.label}
