@@ -121,7 +121,8 @@ const Sanction = ({ formData = {} }) => {
       fontSize: 11,
     },
     colSNo: { width: "8%", textAlign: "center" },
-    colDesc: { width: "35%" },
+    colDesc: { width: "25%" },
+    colQty: {width: "10%", textAlign: "center"},
     colCost: { width: "20%", textAlign: "center" },
     colJust: { width: "37%", borderRight: "none" },
     financialSection: {
@@ -261,6 +262,7 @@ const Sanction = ({ formData = {} }) => {
           <View style={styles.tableHeader}>
             <Text style={[styles.tableCell, styles.colSNo, styles.tableCellHeader]}>S. No.</Text>
             <Text style={[styles.tableCell, styles.colDesc, styles.tableCellHeader]}>Description</Text>
+            <Text style={[styles.tableCell, styles.colQty, styles.tableCellHeader]}>Qty.</Text>
             <Text style={[styles.tableCell, styles.colCost, styles.tableCellHeader]}>Approx. Cost</Text>
             <Text style={[styles.tableCell, styles.colJust, styles.tableCellHeader]}>Justification</Text>
           </View>
@@ -270,6 +272,7 @@ const Sanction = ({ formData = {} }) => {
             <View key={index} style={styles.tableRow}>
               <Text style={[styles.tableCell, styles.colSNo]}>{index + 1}</Text>
               <Text style={[styles.tableCell, styles.colDesc]}>{item.description || ""}</Text>
+              <Text style={[styles.tableCell, styles.colQty]}>{item.quantity || 0}</Text>
               <Text style={[styles.tableCell, styles.colCost]}>
                 {item.cost && item.quantity ? `Rs. ${item.cost}x${item.quantity}=${item.cost * item.quantity}` : ""}
               </Text>
@@ -281,6 +284,7 @@ const Sanction = ({ formData = {} }) => {
           <View style={[styles.tableRow, styles.lastRow]}>
             <Text style={[styles.tableCell, styles.colSNo]} />
             <Text style={[styles.tableCell, styles.colDesc, styles.tableCellHeader]}>TOTAL</Text>
+            <Text style={[styles.tableCell, styles.colQty, styles.tableCellHeader]} />
             <Text style={[styles.tableCell, styles.colCost, styles.tableCellHeader]}>
               {formData.totalAmount > 0 ? `Rs. ${formData.totalAmount.toFixed(2)}` : ""}
             </Text>
