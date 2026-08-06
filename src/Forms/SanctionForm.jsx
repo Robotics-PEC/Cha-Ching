@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "../components/ui/button";
 import { Label } from "../components/ui/label";
 import { Input } from "../components/ui/input";
@@ -24,6 +24,16 @@ export const SanctionForm = ({ onFormDataChange }) => {
         advanceAmount: "",
         recipientName: "",
     });
+
+    useEffect(() => {
+        if(typeof window !== undefined) {
+            const form = sessionStorage.getItem("formData");
+            if(form) {
+                const originalFormData = JSON.parse(form);
+                setFormData(originalFormData);
+            }
+        }
+    }, []);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -59,12 +69,12 @@ export const SanctionForm = ({ onFormDataChange }) => {
     const updateExpenditureItem = (id, field, value) => {
         const updatedItems = formData.expenditureItems.map(item => {
             if (item.id === id) {
-                return { ...item, [field]: field === 'cost' ? parseFloat(value) || 0 : value };
+                return { ...item, [field]: field === 'cost' || field === 'quantity' ? parseFloat(value) || 0 : value };
             }
             return item;
         });
 
-        const totalAmount = updatedItems.reduce((sum, item) => sum + item.cost, 0);
+        const totalAmount = updatedItems.reduce((sum, item) => sum + (item.cost * item.quantity), 0);
 
         const updatedData = {
             ...formData,
@@ -201,22 +211,34 @@ export const SanctionForm = ({ onFormDataChange }) => {
                         >
                             <Card className="p-3">
                                 <div className="space-y-2">
+                                    <div>
+                                        <Label className="text-xs font-medium text-gray-700 block mb-1">Description</Label>
+                                        <Input
+                                            value={item.description}
+                                            onChange={(e) => updateExpenditureItem(item.id, 'description', e.target.value)}
+                                            placeholder="Item description..."
+                                            className="text-xs w-full h-7"
+                                        />
+                                    </div>
                                     <div className="grid grid-cols-2 gap-2">
                                         <div>
-                                            <Label className="text-xs font-medium text-gray-700 block mb-1">Description</Label>
-                                            <Input
-                                                value={item.description}
-                                                onChange={(e) => updateExpenditureItem(item.id, 'description', e.target.value)}
-                                                placeholder="Item description..."
-                                                className="text-xs w-full h-7"
-                                            />
-                                        </div>
-                                        <div>
-                                            <Label className="text-xs font-medium text-gray-700 block mb-1">Cost (₹)</Label>
+                                            <Label className="text-xs font-medium text-gray-700 block mb-1">Cost Per Unit (₹)</Label>
                                             <Input
                                                 type="number"
                                                 value={item.cost}
                                                 onChange={(e) => updateExpenditureItem(item.id, 'cost', e.target.value)}
+                                                className="text-xs w-full h-7"
+                                                min="0"
+                                                step="0.01"
+                                                placeholder="0.00"
+                                            />
+                                        </div>
+                                        <div>
+                                            <Label className="text-xs font-medium text-gray-700 block mb-1">Quantity</Label>
+                                            <Input
+                                                type="number"
+                                                value={item.quantity}
+                                                onChange={(e) => updateExpenditureItem(item.id, 'quantity', e.target.value)}
                                                 className="text-xs w-full h-7"
                                                 min="0"
                                                 step="0.01"

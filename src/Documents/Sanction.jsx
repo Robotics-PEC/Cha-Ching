@@ -17,11 +17,14 @@ const Sanction = ({ formData = {} }) => {
 
   const styles = StyleSheet.create({
     page: {
-      padding: 30,
+      paddingTop: 30,
+      paddingLeft: 30,
+      paddingRight: 30,
+      paddingBottom: 70,
       fontSize: 12,
       flexDirection: "column",
       fontFamily: "Times-Roman",
-      lineHeight: 1.3,
+      // lineHeight: 1.3,
     },
     header: {
       textAlign: "center",
@@ -128,12 +131,13 @@ const Sanction = ({ formData = {} }) => {
       marginBottom: 0,
     },
     signatureSection: {
+      paddingTop: 20,
       marginTop: 0,
     },
     signatureRow: {
       flexDirection: "row",
       justifyContent: "space-between",
-      marginTop: 40,
+      marginTop: 30,
     },
     signature: {
       width: "45%",
@@ -154,19 +158,27 @@ const Sanction = ({ formData = {} }) => {
     approvalItem: {
       marginBottom: 15,
     },
+    footer: {
+      position: "absolute",
+      bottom: 20,
+      left: 0,
+      right: 0,
+      textAlign: "center",
+      fontSize: 10,
+    },
   });
 
   return (
     <Document>
       <Page size="A4" style={styles.page}>
         {/* Header */}
-        <View style={styles.header}>
-          <Text style={styles.title1}>PUNJAB ENGINEERING COLLEGE</Text>
-          <Text style={styles.title2}>(Deemed to be University)</Text>
-          <Text style={styles.title2}>
+        <View style={{marginBottom: 20}}>
+          <Text style={{...styles.title1, textAlign: "center"}}>PUNJAB ENGINEERING COLLEGE</Text>
+          <Text style={{...styles.title2, textAlign: "center"}}>(Deemed to be University)</Text>
+          <Text style={{...styles.title2, textAlign: "center"}}>
             PERFORMA FOR EVENT PERMISSION AND FINANCIAL SANCTION BY
           </Text>
-          <Text style={styles.title2}>CLUBS/SOCIETIES/SPORTS DEPARTMENT</Text>
+          <Text style={{...styles.title2, textAlign: "center"}}>CLUBS/SOCIETIES/SPORTS DEPARTMENT</Text>
         </View>
 
         {/* Event Details */}
@@ -259,7 +271,7 @@ const Sanction = ({ formData = {} }) => {
               <Text style={[styles.tableCell, styles.colSNo]}>{index + 1}</Text>
               <Text style={[styles.tableCell, styles.colDesc]}>{item.description || ""}</Text>
               <Text style={[styles.tableCell, styles.colCost]}>
-                {item.cost ? `Rs. ${item.cost}` : ""}
+                {item.cost && item.quantity ? `Rs. ${item.cost}x${item.quantity}=${item.cost * item.quantity}` : ""}
               </Text>
               <Text style={[styles.tableCell, styles.colJust]}>{item.justification || ""}</Text>
             </View>
@@ -274,7 +286,7 @@ const Sanction = ({ formData = {} }) => {
             </Text>
             <Text style={[styles.tableCell, styles.colJust]} />
           </View>
-        </View>
+        </View> 
 
         {/* Financial sanction */}
         <View style={styles.financialSection}>
@@ -353,13 +365,17 @@ const Sanction = ({ formData = {} }) => {
             Verified by Clerk, DSA Office
           </Text>
           <Text style={{ fontFamily: "Times-Bold", marginTop: 5 }}>Sanction / Not Sanctioned</Text>
-          <Text style={{ marginTop: 10, fontFamily: "Times-Bold" }}>
+          <Text style={{ marginTop: 50, fontFamily: "Times-Bold" }}>
             Dean Students Affairs
           </Text>
         </View>
-
-      </Page >
-    </Document >
+        <Text
+          fixed
+          style={styles.footer}
+          render={({pageNumber, totalPages}) => `Page ${pageNumber} of ${totalPages}`}
+        />
+      </Page>
+    </Document>
   );
 };
 

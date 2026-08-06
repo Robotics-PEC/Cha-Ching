@@ -3,28 +3,28 @@ import react from "@vitejs/plugin-react";
 import path from 'path';
 
 // https://vite.dev/config/
-export default defineConfig({
-  base: "./",
+export default defineConfig((command) => {
+  const isProduction = command === 'build';
+  
+  return {
+  base: isProduction ? "/Cha-Ching/" : "./", // ← Changes based on build vs dev
   plugins: [react()],
   server: {
+    host: 'localhost',
     port: 8000,
+    strictPort: false,
+    hmr: {
+      host: 'localhost',
+      port: 8000,
+      protocol: 'ws'
+    }
   },
   preview: {
     port: 8000,
   },
-  // optimizeDeps: {
-  //   exclude: ["pdfjs-dist"],
-  // },
   resolve: {
     alias: {
       '@': path.resolve(__dirname, 'src'),
     },
-  },
-  build: {
-    rollupOptions: {
-      output: {
-        dir: "./dist",
-      },
-    },
-  },
-});
+  }
+}});

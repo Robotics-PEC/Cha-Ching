@@ -19,6 +19,15 @@ const App = () => {
       setIsMobile(window.innerWidth <= 768);
     };
 
+    if(typeof window !== undefined) {
+      const form = sessionStorage.getItem("formData");
+      const originalFormData = JSON.parse(form);
+      
+      if(originalFormData) {
+        setFormData(originalFormData);
+      }
+    }
+
     window.addEventListener("resize", handleResize);
     handleResize();
 
@@ -59,6 +68,11 @@ const App = () => {
     };
   }, [formData]);
 
+  const onFormDataChange = (data) => {
+    setFormData(data);
+    sessionStorage.setItem("formData", JSON.stringify(data));
+  }
+
   return (
     <div className="min-h-screen flex flex-col bg-gray-50">
       <Header />
@@ -80,55 +94,53 @@ const App = () => {
             </p>
           </div>
 
-          <div className="bg-white rounded-2xl shadow-lg border border-gray-200">
-            <div className="flex flex-col lg:flex-row min-h-[700px]">
-              {/* Form Section */}
-              <div className="lg:w-[400px] p-8 border-r border-gray-100">
-                <div className="space-y-6">
-                  <SanctionForm onFormDataChange={setFormData} />
-                </div>
-
-                <div className="mt-6 pt-6 border-t border-gray-100">
-                  <PDFDownloadLink
-                    document={<Sanction formData={formData} />}
-                    fileName="Event_Sanction_Form.pdf"
-                  >
-                    {({ loading }) => (
-                      <Button
-                        className="w-full transition-colors"
-                        disabled={loading}
-                      >
-                        {loading ? "Preparing Download..." : "Download PDF"}
-                      </Button>
-                    )}
-                  </PDFDownloadLink>
-                </div>
+          <div className="bg-white rounded-2xl shadow-lg border border-gray-200 h-[calc(100vh-200px)]">
+          <div className="flex flex-col lg:flex-row h-full">
+            {/* Form Section */}
+            <div className="lg:w-[400px] p-8 border-r border-gray-100 overflow-y-auto">
+              <div className="space-y-6">
+                <SanctionForm onFormDataChange={onFormDataChange} />
               </div>
 
-              {/* PDF Viewer Section */}
-              <div className="flex-1 p-8 bg-gray-50 rounded-r-2xl">
-                <div className="h-full">
-                  {pdfLoading ? (
-                    <div className="flex items-center justify-center h-full">
-                      <div className="text-center">
-                        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto mb-2"></div>
-                        <div className="text-gray-500">Generating PDF preview...</div>
-                      </div>
-                    </div>
-                  ) : pdfUrl ? (
-                    <PaperViewer url={pdfUrl} />
-                  ) : (
-                    <div className="flex items-center justify-center h-full">
-                      <div className="text-center text-gray-500">
-                        <p className="text-lg mb-2">PDF Preview</p>
-                        <p className="text-sm">Fill out the form to see the preview</p>
-                      </div>
-                    </div>
+              <div className="mt-6 pt-6 border-t border-gray-100">
+                <PDFDownloadLink
+                  document={<Sanction formData={formData} />}
+                  fileName="Event_Sanction_Form.pdf"
+                >
+                  {({ loading }) => (
+                    <Button
+                      className="w-full transition-colors"
+                      disabled={loading}
+                    >
+                      {loading ? "Preparing Download..." : "Download PDF"}
+                    </Button>
                   )}
-                </div>
+                </PDFDownloadLink>
               </div>
             </div>
+
+            {/* PDF Viewer Section */}
+            <div className="flex-1 p-8 bg-gray-50 rounded-r-2xl overflow-hidden">
+              {pdfLoading ? (
+                <div className="flex items-center justify-center h-full">
+                  <div className="text-center">
+                    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto mb-2"></div>
+                    <div className="text-gray-500">Generating PDF preview...</div>
+                  </div>
+                </div>
+              ) : pdfUrl ? (
+                <PaperViewer url={pdfUrl} />
+              ) : (
+                <div className="flex items-center justify-center h-full">
+                  <div className="text-center text-gray-500">
+                    <p className="text-lg mb-2">PDF Preview</p>
+                    <p className="text-sm">Fill out the form to see the preview</p>
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
+        </div>
         </div>
       </main>
 
