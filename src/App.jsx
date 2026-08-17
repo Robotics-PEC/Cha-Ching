@@ -14,6 +14,27 @@ const App = () => {
   const [debounceTimer, setDebounceTimer] = useState(null);
   const [pdfLoading, setPdfLoading] = useState(false);
 
+  const handleClick = async () => {
+    const blob = await pdf(<Sanction formData={formData} />).toBlob();
+    const API_URL = import.meta.env.VITE_API_URL || "";
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/api/sanction`, {
+      headers: {
+        "Content-Type": "application/pdf",
+        "X-Filename": formData.clubName,
+      },
+      method: "POST",
+      body: blob
+    });
+
+    const result = await response.json();
+
+    if (!response.ok) {
+      throw new Error(result.error);
+    }
+
+    console.log(result);
+  }
+
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth <= 768);
@@ -111,6 +132,7 @@ const App = () => {
                     <Button
                       className="w-full transition-colors"
                       disabled={loading}
+                      onClick={handleClick}
                     >
                       {loading ? "Preparing Download..." : "Download PDF"}
                     </Button>
