@@ -17,7 +17,7 @@ const App = () => {
   const handleClick = async () => {
     const blob = await pdf(<Sanction formData={formData} />).toBlob();
     const API_URL = import.meta.env.VITE_API_URL || "";
-    const response = await fetch(`${import.meta.env.VITE_API_URL}/api/sanction`, {
+    const response = await fetch(`${API_URL}/api/sanction`, {
       headers: {
         "Content-Type": "application/pdf",
         "X-Filename": formData.clubName,
