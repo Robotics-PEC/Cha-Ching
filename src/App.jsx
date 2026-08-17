@@ -31,8 +31,6 @@ const App = () => {
     if (!response.ok) {
       throw new Error(result.error);
     }
-
-    console.log(result);
   }
 
   useEffect(() => {
